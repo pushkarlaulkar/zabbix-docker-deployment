@@ -35,6 +35,6 @@ services:
       - /opt/services/zabbix-server-data:/var/lib/zabbix
       - /opt/services/zabbix-snmptraps-data:/var/lib/zabbix/snmptraps
       - /opt/services/zabbix-export-data:/var/lib/zabbix/export
-      - /opt/services/zabbix-external-scripts:/var/lib/zabbix/externalscripts
+      - /opt/services/zabbix-external-scripts:/usr/lib/zabbix/externalscripts
     networks:
       - services_net
