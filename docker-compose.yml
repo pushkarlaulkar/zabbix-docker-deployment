@@ -1,0 +1,10 @@
+version: '3.7'
+services:
+  postgresql-server:
+    image: postgres:14.7
+    container_name: postgresql-server
+    restart: unless-stopped
+    environment:
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: zabbix
+      POSTGRES_DB: zabbix
