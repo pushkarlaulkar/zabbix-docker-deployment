@@ -62,3 +62,28 @@ services:
       - /opt/services/conf/nginx.conf:/etc/zabbix/nginx.conf
     networks:
       - services_net
+  
+  zabbix-agent2:
+    image: zabbix/zabbix-agent2:7.0.0-ubuntu
+    container_name: zabbix-agent2
+    restart: unless-stopped
+    depends_on:
+      - zabbix-server
+    environment:
+      ZBX_HOSTNAME: "zabbix-server"
+      ZBX_SERVER_HOST: "zabbix-server"
+      ZBX_SERVER_PORT: '10051'
+      ZBX_SERVER_ACTIVE: zabbix-server
+    volumes:
+      - /:/rootfs:ro
+      - /var/run:/var/run
+      - /opt/services/zabbix_agentd.d:/etc/zabbix/zabbix_agentd.d
+      - /opt/services/sources.list:/etc/apt/sources.list          # If there are any custom sources.list than the default one
+    privileged: true
+    user: "root:root"
+    networks:
+      - services_net
+
+networks:
+  services_net:
+    driver: bridge
