@@ -12,3 +12,29 @@ services:
       - /opt/services/postgresql-data:/var/lib/postgresql/data
     networks:
       - services_net
+
+  zabbix-server:
+    image: zabbix/zabbix-server-pgsql:7.0.0-ubuntu
+    container_name: zabbix-server
+    restart: unless-stopped
+    depends_on:
+      - postgresql-server
+    environment:
+      DB_SERVER_HOST: postgresql-server
+      POSTGRES_USER: zabbix
+      POSTGRES_PASSWORD: zabbix
+      POSTGRES_DB: zabbix
+      ZBX_STARTVMWARECOLLECTORS: 1
+      ZBX_STARTCONNECTORS: 1
+      ZBX_ENABLE_SNMP_TRAPS: "true"
+      ZBX_STARTJAVAPOLLERS: 5
+      ZBX_CACHESIZE: "128M"
+    ports:
+      - "10051:10051"
+    volumes:
+      - /opt/services/zabbix-server-data:/var/lib/zabbix
+      - /opt/services/zabbix-snmptraps-data:/var/lib/zabbix/snmptraps
+      - /opt/services/zabbix-export-data:/var/lib/zabbix/export
+      - /opt/services/zabbix-external-scripts:/var/lib/zabbix/externalscripts
+    networks:
+      - services_net
