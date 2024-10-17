@@ -1,7 +1,7 @@
 version: '3.7'
 services:
   postgresql-server:
-    image: postgres:14.7
+    image: postgres:15.0
     container_name: postgresql-server
     restart: unless-stopped
     environment:
@@ -14,7 +14,7 @@ services:
       - services_net
 
   zabbix-server:
-    image: zabbix/zabbix-server-pgsql:7.0.0-ubuntu
+    image: zabbix/zabbix-server-pgsql:7.0.2-ubuntu
     container_name: zabbix-server
     restart: unless-stopped
     depends_on:
@@ -40,7 +40,7 @@ services:
       - services_net
 
   zabbix-web-nginx-pgsql:
-    image: zabbix/zabbix-web-nginx-pgsql:7.0.0-ubuntu
+    image: zabbix/zabbix-web-nginx-pgsql:7.0.2-ubuntu
     container_name: zabbix-web
     restart: unless-stopped
     depends_on:
@@ -64,7 +64,7 @@ services:
       - services_net
   
   zabbix-agent2:
-    image: zabbix/zabbix-agent2:7.0.0-ubuntu
+    image: zabbix/zabbix-agent2:7.0.2-ubuntu
     container_name: zabbix-agent2
     restart: unless-stopped
     depends_on:
